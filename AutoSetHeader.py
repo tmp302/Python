@@ -1,5 +1,16 @@
-def AutoSetHeader():
-    rawHeader = '''GET /test HTTP/1.1
+def AutoSetHeader(header):
+    rawHeader = header
+
+    splitHeaderA = rawHeader.strip().split("\n")
+    splitHeaderB = splitHeaderA[1:]
+    HeaderInfo = {}
+    for i in splitHeaderB:
+        listHeader = i.strip().split(":",1)
+        HeaderInfo[listHeader[0]] = listHeader[1].strip()
+
+    return HeaderInfo
+
+print(AutoSetHeader('''GET /test HTTP/1.1
     Host: xxx.xxx.com
     Accept: application/json, text/plain, */*
     Sec-Ch-Ua-Mobile: ?0
@@ -13,15 +24,4 @@ def AutoSetHeader():
     Accept-Language: zh-CN,zh;q=0.9
     Connection: close
 
-    '''
-
-    splitHeaderA = rawHeader.strip().split("\n")
-    splitHeaderB = splitHeaderA[1:]
-    HeaderInfo = {}
-    for i in splitHeaderB:
-        listHeader = i.strip().split(":",1)
-        HeaderInfo[listHeader[0]] = listHeader[1].strip()
-
-    return HeaderInfo
-
-print(AutoSetHeader())
+    '''))
